@@ -3,7 +3,7 @@ import React from 'react'
 const Button = ({text}) => {
   return (
     <div className=''>
-        <button className='text-gray-800 font-semibold bg-yellow-600 p-4 shadow- rounded'>{text}</button>
+        <button className='text-gray-800 font-semibold bg-yellow-500 p-4 cursor-pointer rounded'>{text}</button>
     </div>
   )
 }

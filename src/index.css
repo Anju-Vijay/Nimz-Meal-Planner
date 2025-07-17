@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
 #root {
-  max-width: 1280px;
-  height: 97vh;
-  margin: 0 auto;
+  
+  min-height: 100vh;
   background-color: #222222;
 }
 

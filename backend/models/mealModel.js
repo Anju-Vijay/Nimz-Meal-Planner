@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const mealSchema=new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    day:{type:String,required:true, enum: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],required: true},
+    day:{type:String,required:true, enum: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']},
     meals:{
         breakfast: {type: String, required:true},
         lunch: {type: String, required:true},

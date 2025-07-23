@@ -1,6 +1,9 @@
-import {useState}from "react";
+import {useContext, useState}from "react";
+import { MealContext } from "../context/MealContext";
+import axios from 'axios'
 
 const AddMeals = () => {
+    const {token,backendUrl} =useContext(MealContext)
     const [formData, setFormData]=useState({
         day:'',
         breakfast:'',
@@ -11,18 +14,25 @@ const AddMeals = () => {
         const{name,value}=e.target;
         setFormData({...formData,[name]:value})
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault()
-        console.log(formData)  
+    const handleSubmit=async(e)=>{
+        e.preventDefault() 
+       try {
+        const response=await axios.post(backendUrl+"/api/meals/add-meals", {formData},{headers:{Authorization: `Bearer ${token}`}})
+        if(response.data.success){
+        console.log("mealsBackend:",response.data)
         setFormData({
-            day:'',
-            breakfast:'',
-            lunch:'',
-            dinner:''
+          day:'',
+          breakfast:'',
+          lunch:'',
+          dinner:''
         })
+        }else{
+          console.log(response.data.message)
+        }
+       } catch (error) {
+        console.log(error)
+       }
      }
-
-
   return (
     <div className=" max-w-[400px] m-10 p-5  bg-yellow-500 text-gray-800 rounded">
       <h1 className="font-bold text-2xl">Enter Meal Details</h1>

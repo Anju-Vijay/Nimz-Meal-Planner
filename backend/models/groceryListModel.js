@@ -1,13 +1,11 @@
 import mongoose from "mongoose";
 
 const groceryListSchema=new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true , unique: true},
     groceryList:[
-        {
-            items:{
-                id:{ type: String,required:true},
-                text:{ type: String,required:true}
-            }
+        {  
+        id:{ type: String,required:true},
+        text:{ type: String,required:true}   
         }
     ] 
 })

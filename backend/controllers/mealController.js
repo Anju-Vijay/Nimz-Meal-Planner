@@ -5,6 +5,10 @@ const addMeals=async(req,res)=>{
     try {
         const {formData}=req.body
         const user=req.user.id
+        const mealExist=await MealModel.findOne({user,day:formData.day})
+        if(mealExist){
+            return res.json({success:false,message:`Meal data already exist for ${formData.day}`})
+        }
         const mealData={
             user,
             day:formData.day,
@@ -18,9 +22,6 @@ const addMeals=async(req,res)=>{
         await meals.save()
         res.json({success:true,Message:"Meal added"})
     } catch (error) {
-         if (error.code === 11000) {
-            return res.json({success: false, message: `Meal already exists for ${req.body.formData.day}.`});
-        }
         console.log(error);
         res.json({success:false,message:error.message})
     }

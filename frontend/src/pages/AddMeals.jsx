@@ -19,7 +19,6 @@ const AddMeals = () => {
        try {
         const response=await axios.post(backendUrl+"/api/meals/add-meals", {formData},{headers:{Authorization: `Bearer ${token}`}})
         if(response.data.success){
-        console.log("mealsBackend:",response.data)
         setFormData({
           day:'',
           breakfast:'',

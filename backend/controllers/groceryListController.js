@@ -7,37 +7,46 @@ const addGroceryList=async(req,res)=>{
         const groceryData={ 
             user,
             groceryList:items.map(item=>({
-                items: {
-                    id:item.id,
-                    text: item.text
-                }
+                id:item.id,
+                text: item.text  
             }))
         }
-        console.log(groceryData)
-        const grocery=new GroceryListModel(groceryData)
-        await grocery.save()
-        res.json({success:true,Message:"Grocery List Added"})
-
+        const listExist=await GroceryListModel.findOne({user})
+        if(!listExist){
+            const grocery=new GroceryListModel(groceryData)
+            await grocery.save()
+            res.json({success:true,Message:"Grocery List Added"})
+        }else{
+            await GroceryListModel.findOneAndUpdate( { user },
+            { $set: { groceryList: groceryData.groceryList } },
+            { new: true })
+            res.json({success:true,Message:"Grocery List Updated"})
+        }
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:error.message})
-        
+        res.json({success:false,message:error.message}) 
     }
-
 }
-
 const listGrocery=async(req,res)=>{
+    const user=req.user.id
     try {
-        const user=req.user.id
-        const groceryList=await GroceryListModel.find({user})
-        console.log(groceryList)
-        res.json({success:true,groceryList})
+       const groceryData= await GroceryListModel.findOne({user})
+       const groceryItems=groceryData? groceryData.groceryList :[]
+       res.json({success:true,groceryItems})
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:error.message})
-        
+        res.json({success:false,message:error.message})   
     }
-
 }
 
-export {addGroceryList,listGrocery}
+const removeGroceryList=async(req,res)=>{
+    const user=req.user.id
+    try {
+        await GroceryListModel.findOneAndDelete({user})
+        res.json({success:true,message:"Grocery List Removed"})
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message}) 
+    }
+}
+export {addGroceryList, listGrocery, removeGroceryList}

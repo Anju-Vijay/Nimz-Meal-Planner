@@ -1,19 +1,57 @@
-import {useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import bin_icon from '../assets/bin_icon.png'
+import { MealContext } from '../context/MealContext'
+import axios from 'axios'
+
 
 const GroceryList = () => {
-    const [items, setItems]=useState([])
+    const {token,backendUrl}=useContext(MealContext)
     const [inputValue, setInputValue]=useState('')
+    const [groceryData,setGroceryData]=useState([])
 
-    const onSubmitHandler=(e)=>{
+    const onSubmitHandler=async(e)=>{
       e.preventDefault()
-      setItems((prev)=>[...prev,{id:Date.now().toString(), text:inputValue}])
-      setInputValue('')
-
+      try {
+          const newItem = { id: Date.now().toString(), text: inputValue };
+          const updatedList = [...groceryData, newItem];
+          const response=await axios.post(backendUrl+"/api/grocery/add-grocery",{items: updatedList},{headers:{Authorization:`Bearer ${token}`}})
+          if(response.data.success){
+            console.log(response.data)
+            setInputValue('')
+            getGroceryList();
+          }else{
+            console.log(response.data.message) 
+          }
+      } catch (error) {
+        console.log(error); 
+      }
     }
-    const removeAllList=()=>{
-      setItems([])
+    const getGroceryList=async()=>{
+      try {
+        const response=await axios.get(backendUrl+"/api/grocery/list-grocery",{headers:{Authorization:`Bearer ${token}`}})
+        if(response.data.success){
+          setGroceryData(response.data.groceryItems);
+        }
+      } catch (error) {
+        console.log(error); 
+      }
     }
+    const removeAllList=async()=>{
+      try {
+        const response=await axios.delete(backendUrl+"/api/grocery/remove-grocery",{headers:{Authorization:`Bearer ${token}`}})
+        if(response.data.success){
+          console.log(response.data.message)
+          setGroceryData([])
+        }
+      } catch (error) {
+        console.log(error); 
+      }
+    }
+    useEffect(()=>{
+      if(token){
+        getGroceryList()
+      }
+    },[token])
   return (
     <div className='flex flex-col justify-center items-center pt-10' >
       <div className='flex gap-4 ' >
@@ -21,7 +59,7 @@ const GroceryList = () => {
         <button onClick={onSubmitHandler} className='bg-yellow-500 text-gray-800 p-3 rounded cursor-pointer font-semibold'>Add Item</button>
       </div>
       <div className='relative mt-10 bg-yellow-500 text-gray-800 rounded w-70 h-60 p-4'>
-        {items?.map((item,index)=>(
+        {groceryData?.map((item,index)=>(
         <div key={item.id} >
            <p className='font-semibold'>{index + 1}. {item.text}</p>
         </div>

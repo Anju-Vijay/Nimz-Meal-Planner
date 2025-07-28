@@ -8,6 +8,7 @@ const Login = () => {
 
   const[currentState,setCurrentState]=useState('Login')
   const [name, setName]=useState('')
+  const [phone, setPhone]=useState('')
   const [password, setPassword]=useState('')
   const [email, setEmail]=useState('')
 
@@ -15,7 +16,7 @@ const Login = () => {
     e.preventDefault()
     try {
       if(currentState==='Sign Up'){
-        const response=await axios.post(backendUrl+"/api/user/register",{name,email,password})
+        const response=await axios.post(backendUrl+"/api/user/register",{name,phone, email,password})
         if(response.data.success){
           console.log(response.data)
           setToken(response.data.token)
@@ -47,9 +48,10 @@ const Login = () => {
       <div className='flex flex-col justify-center items-center bg-neutral-900 px-10 py-2 rounded'>
         <h2 className=' font-bold text-2xl text-yellow-500'>{currentState}</h2>
         <div className='flex flex-col'>
-          {currentState==='Login'?'':
+          {currentState==='Login'?'':<>
           <input onChange={(e)=>setName(e.target.value)} value={name} className='w-full mt-5 px-3 py-2 border border-yellow-500 cursor-pointer rounded-lg text-yellow-500' name="name" type="text" placeholder='Enter your name'/>
-          }
+          <input onChange={(e)=>setPhone(e.target.value)} value={phone} className='w-full mt-5 px-3 py-2 border border-yellow-500 cursor-pointer rounded-lg text-yellow-500' name="number"  type="text" placeholder='Enter phone number'/>
+          </>}
           <input onChange={(e)=>setEmail(e.target.value)} value={email} className='w-full mt-4 px-3 py-2 border border-yellow-500 cursor-pointer rounded-lg text-yellow-500' name="email" type="email" placeholder='Enter email' />
           <input onChange={(e)=>setPassword(e.target.value)} value={password} className='w-full mt-4 px-3 py-2 border border-yellow-500 cursor-pointer rounded-lg text-yellow-500' name="password" type="password" placeholder='Enter password' />
           <button className='w-full mt-4 px-3 py-2 cursor-pointer bg-yellow-500 rounded-lg font-bold text-[#222222] '>{currentState}</button>

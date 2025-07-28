@@ -11,7 +11,7 @@ const createToken=(id)=>{
  //Route for user register
  const userRegister=async(req,res)=>{
     try {
-        const {name,email,password}=req.body
+        const {name,phone,email,password}=req.body
         //Check user exist
         const userExist=await UserModel.findOne({email})
         if(userExist){
@@ -29,6 +29,7 @@ const createToken=(id)=>{
         const hashedPassword=await bcrypt.hash(password,salt)
         const newUser=new UserModel({
             name,
+            phone,
             email,
             password:hashedPassword
         })

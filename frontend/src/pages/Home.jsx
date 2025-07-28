@@ -20,7 +20,6 @@ const Home = () => {
                     <Route path='/grocery-list' element={<GroceryList/>}/>
                     <Route path='/add-meals' element={<AddMeals/>}/>
                 </Routes>
-              
             </main>
         </div> 
     </div>

@@ -5,6 +5,7 @@ import connectDB from './config/mongodb.js'
 import userRouter from './routes/userRoute.js'
 import mealRouter from './routes/mealRoute.js'
 import groceryListRouter from './routes/groceryListRoute.js'
+import './cron/groceryCron.js';
 /* 
 import MealModel from './models/mealModel.js';
 

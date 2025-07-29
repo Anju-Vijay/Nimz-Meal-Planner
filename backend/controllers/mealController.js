@@ -9,6 +9,7 @@ const addMeals=async(req,res)=>{
         if(mealExist){
             return res.json({success:false,message:`Meal data already exist for ${formData.day}`})
         }
+        // Prepare meal data
         const mealData={
             user,
             day:formData.day,
@@ -18,6 +19,7 @@ const addMeals=async(req,res)=>{
                 dinner:formData.dinner
             }
         }
+        //save a meal data
         const meals=new MealModel(mealData)
         await meals.save()
         res.json({success:true,Message:"Meal added"})

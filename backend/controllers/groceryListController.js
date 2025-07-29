@@ -1,9 +1,11 @@
 import GroceryListModel from "../models/groceryListModel.js"
 
+//to add grocery list
 const addGroceryList=async(req,res)=>{
     try {
         const {items} =req.body
         const user=req.user.id
+        // Prepare grocery list data
         const groceryData={ 
             user,
             groceryList:items.map(item=>({
@@ -11,12 +13,16 @@ const addGroceryList=async(req,res)=>{
                 text: item.text  
             }))
         }
+
+         // Check if grocery list already exists for this user
         const listExist=await GroceryListModel.findOne({user})
         if(!listExist){
+            // If no list exists, create a new one
             const grocery=new GroceryListModel(groceryData)
             await grocery.save()
             res.json({success:true,Message:"Grocery List Added"})
         }else{
+            // If list exists, update the grocery list
             await GroceryListModel.findOneAndUpdate( { user },
             { $set: { groceryList: groceryData.groceryList } },
             { new: true })
@@ -27,6 +33,8 @@ const addGroceryList=async(req,res)=>{
         res.json({success:false,message:error.message}) 
     }
 }
+
+// to list grocery list data
 const listGrocery=async(req,res)=>{
     const user=req.user.id
     try {
@@ -39,6 +47,7 @@ const listGrocery=async(req,res)=>{
     }
 }
 
+//to remove groery list data
 const removeGroceryList=async(req,res)=>{
     const user=req.user.id
     try {

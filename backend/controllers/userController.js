@@ -50,12 +50,16 @@ const createToken=(id)=>{
  const userLogin=async(req,res)=>{
     try {
         const{email,password}=req.body
+        //Check if user exists
         const user=await UserModel.findOne({email})
         if(!user){
              return res.json({success:false,message:"Email doesn't exist, Please signup"})
         }
+        //Compare passwords
         const isMatch=await bcrypt.compare(password,user.password)
         if(isMatch){
+
+            // Generate token
             const token=createToken(user._id)
             res.json({success:true,token})
         }else{

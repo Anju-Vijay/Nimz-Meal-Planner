@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+// Meals Schema
 const mealSchema=new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     day:{type:String,required:true, enum: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']},

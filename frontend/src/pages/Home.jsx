@@ -5,6 +5,7 @@ import DailyMeals from './DailyMeals'
 import GroceryList from './GroceryList'
 import {Routes,Route} from 'react-router-dom'
 import AddMeals from './AddMeals'
+import HomeBg from '../components/HomeBg'
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
             </aside>
             <main className='flex-1'>
                 <Routes>
+                    <Route path='/' element={<HomeBg/>}/>
                     <Route path='/daily-meals' element={<DailyMeals/>}/>
                     <Route path='/grocery-list' element={<GroceryList/>}/>
                     <Route path='/add-meals' element={<AddMeals/>}/>

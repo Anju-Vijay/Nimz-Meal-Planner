@@ -26,7 +26,7 @@ const Header = () => {
           <div className='relative'>
           <img onClick={()=>setProfileVisible(prev=>!prev)} className='w-5 cursor-pointer'src={profile_icon} alt='Profile_icon'/>
           {profileVisible && (
-            <div className='absolute right-1 top-9 bg-yellow-500 p-2 rounded cursor-pointer ' >
+            <div className='absolute right-1 top-9 bg-yellow-500 p-2 rounded cursor-pointer z-50' >
             <p onClick={logout}>Logout</p>
             </div>
           )}
@@ -35,7 +35,7 @@ const Header = () => {
           <div className='relative sm:hidden'>
           <img onClick={()=>setMenuVisible(prev=>!prev)} className='w-5 cursor-pointer'src={menu_icon} alt='menu_icon'/>
           {menuVisible && (
-            <div className='absolute flex flex-col w-50 right-1 top-9 bg-yellow-500 p-4 rounded cursor-pointer ' >
+            <div className='absolute flex flex-col w-50 right-1 top-9 bg-yellow-500 p-4 rounded cursor-pointer z-50 ' >
             <NavLink className='p-3 shadow m-2 font-semibold' onClick={()=>setMenuVisible(false)} to='/daily-meals'>Daily Meals</NavLink>
             <NavLink className='p-3 shadow m-2 font-semibold' onClick={()=>setMenuVisible(false)} to='/grocery-list'>Grocery List</NavLink>
             <NavLink className='p-3 shadow m-2 font-semibold' onClick={()=>setMenuVisible(false)} to='/add-meals'>Add Meals</NavLink>

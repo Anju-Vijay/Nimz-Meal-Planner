@@ -12,7 +12,7 @@ const Home = () => {
     <div className='w-full'>
         <Header/>
         <div className='flex'> 
-            <aside className=' w-50 min-w-[150px] min-h-screen  border-r-5 border-yellow-600 pt-10'>
+            <aside className='hidden sm:block w-50 min-w-[150px] min-h-screen  border-r-5 border-yellow-600 pt-10'>
                 <LeftSideBar/>
             </aside>
             <main className='flex-1'>

@@ -3,6 +3,8 @@ import { Route, Routes,Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import { useContext } from 'react'
 import { MealContext } from './context/MealContext'
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
@@ -10,6 +12,7 @@ const App = () => {
   
   return (
     <div>
+      <ToastContainer/>
       <Routes>
         <Route path='/*' element={token? <Home/>: <Navigate to="/login"/>}/>
         <Route path='/login' element={<Login/>}/> 

@@ -1,6 +1,7 @@
 import {useContext, useState}from "react";
 import { MealContext } from "../context/MealContext";
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 const AddMeals = () => {
     const {token,backendUrl} =useContext(MealContext)
@@ -25,11 +26,13 @@ const AddMeals = () => {
           lunch:'',
           dinner:''
         })
+        toast.success("Meals is Added")
         }else{
           console.log(response.data.message)
         }
        } catch (error) {
         console.log(error)
+        toast.error(error.message) 
        }
      }
   return (

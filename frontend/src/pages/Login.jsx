@@ -2,6 +2,7 @@ import {useState, useContext} from 'react'
 import axios from 'axios'
 import { MealContext } from '../context/MealContext'
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const {backendUrl, token, setToken,navigate}=useContext(MealContext)
@@ -21,8 +22,9 @@ const Login = () => {
           console.log(response.data)
           setToken(response.data.token)
           localStorage.setItem('token',response.data.token)
+          toast.success("Successfully registered")
         }else{
-          
+          console.log(response.data.message)
         }
       }else{
         const response=await axios.post(backendUrl+"/api/user/login",{email,password})
@@ -30,12 +32,14 @@ const Login = () => {
           console.log(response.data)
           setToken(response.data.token)
           localStorage.setItem('token',response.data.token)
+          toast.success("Successfully Login")
           }else{    
-                   
+            console.log(response.data.message)  
           } 
         }
     } catch (error) {
       console.log(error)
+      toast.error(error.message)
     }
   }
   useEffect(()=>{

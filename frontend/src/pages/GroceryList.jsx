@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from 'react'
 import bin_icon from '../assets/bin_icon.png'
 import { MealContext } from '../context/MealContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 const GroceryList = () => {
@@ -19,11 +20,13 @@ const GroceryList = () => {
             console.log(response.data)
             setInputValue('')
             getGroceryList();
+            toast.success("Grocery item added")
           }else{
             console.log(response.data.message) 
           }
       } catch (error) {
         console.log(error); 
+        toast.error(error.message) 
       }
     }
     const getGroceryList=async()=>{
@@ -34,6 +37,7 @@ const GroceryList = () => {
         }
       } catch (error) {
         console.log(error); 
+        toast.error(error.message)
       }
     }
     const removeAllList=async()=>{
@@ -42,9 +46,11 @@ const GroceryList = () => {
         if(response.data.success){
           console.log(response.data.message)
           setGroceryData([])
+          toast.success("List is removed")
         }
       } catch (error) {
-        console.log(error); 
+        console.log(error);
+        toast.error(error.message) 
       }
     }
     useEffect(()=>{
